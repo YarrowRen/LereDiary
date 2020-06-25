@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+
+日记部分数据库配置文件
+
+-->
+<litepal>
+
+    <dbname value="DiaryDB"></dbname>
+
+    <version value="3"></version>
+
+    <list>
+        <mapping class="cn.ywrby.lerediary.db.Diary"></mapping>
+    </list>
+
+</litepal>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+首页菜单栏
+
+本文件记录了首页ToolBar的菜单界面需要展示的几个重要控件
+
+搜索：search 通过关键词对所有日记文件进行检索
+
+定时：clock 定时通知用户写日记
+
+写日记： write diary 打开新日记页面
+
+设置：setting 后期完善
+
+意见：opinion 后期完善
+-->
+
+
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/search"
+        android:title="Search"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/clock"
+        android:icon="@drawable/clock"
+        android:title="Clock"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/write_diary_menu"
+        android:title="写日记"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/setting_menu"
+        android:title="设置"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/opinion_menu"
+        android:title="意见"
+        app:showAsAction="never"/>
+
+</menu>

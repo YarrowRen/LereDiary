@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+滑动窗口中具体的菜单项
+
+这里将所有的元素都先嵌套在group组中
+然后指定group的checkableBehavior属性为true
+表示只允许单选，这更符合实际使用情况
+
+-->
+
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_message"
+            android:icon="@drawable/message"
+            android:title="我的资料"/>
+        <item
+            android:id="@+id/nav_tag"
+            android:icon="@drawable/tag"
+            android:title="常用标签"/>
+        <item
+            android:id="@+id/nav_location"
+            android:icon="@drawable/location"
+            android:title="记忆地点"/>
+        <item
+            android:id="@+id/nav_collect"
+            android:icon="@drawable/collect"
+            android:title="日记收藏"/>
+        <item
+            android:id="@+id/nav_theme"
+            android:icon="@drawable/theme"
+            android:title="更换主题"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/setting"
+            android:title="设置"/>
+
+
+    </group>
+</menu>

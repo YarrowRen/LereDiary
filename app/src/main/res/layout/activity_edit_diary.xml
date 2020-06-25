@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+编辑界面-书写日记
+
+除去Toolbar，最上面的部分是对日期，时间和天气的选择
+
+第二三部分分别是题目和日记主题，题目部分限长16字
+
+最后一部分是特殊功能，包括语音输入，相机拍摄，相册选择，地址插入
+
+日记内容框中的属性android:scrollbars="vertical"是为了使输入内容超出页面长度后显示滚动条
+
+
+-->
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/edit_coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".EditDiaryActivity">
+
+
+
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/edit_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/edit_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+    <LinearLayout
+
+            android:id="@+id/edit_basic"
+            android:layout_below="@id/edit_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+                android:id="@+id/edit_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/calendar"
+                android:textSize="15sp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+        />
+        <TextView
+                android:id="@+id/edit_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/time"
+                android:textSize="15sp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+        />
+        <ImageView
+                android:id="@+id/edit_mood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/mood2"
+                android:layout_margin="5dp"
+        />
+    </LinearLayout>
+
+
+    <EditText
+            android:id="@+id/edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/write_color"
+            android:textColorHint="@color/hint_color"
+            android:textSize="20sp"
+            android:hint="请输入题目"
+            android:maxLength="16"
+            android:singleLine="true"
+            android:background="@null"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_below="@id/edit_basic"
+
+    />
+
+
+    <ScrollView
+            android:layout_below="@id/edit_title"
+            android:layout_above="@id/edit_func"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+    >
+
+        <com.widemouth.library.wmview.WMEditText
+                android:id="@+id/edit_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/write_color"
+                android:textColorHint="@color/hint_color"
+                android:textSize="17sp"
+                android:hint="开始你的日记之旅吧！"
+                android:background="@null"
+                android:scrollbars="vertical" />
+
+    </ScrollView>
+
+
+
+    <LinearLayout
+            android:id="@+id/edit_func"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+    >
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#432B2B2C"/>
+
+        <ImageButton
+                android:id="@+id/edit_speech"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit_voice"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+        />
+
+
+
+        <com.widemouth.library.wmview.WMToolContainer
+                android:id="@+id/WMToolContainer"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#432B2B2C"/>
+
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="5dp"
+        >
+
+            <ImageView
+                    android:id="@+id/edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/edit_text"
+            />
+            <ImageView
+                    android:id="@+id/edit_voice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/edit_voice"
+            />
+            <ImageView
+                    android:id="@+id/edit_album"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/edit_album"
+            />
+            <ImageView
+                    android:id="@+id/edit_clear"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/edit_clear"
+            />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

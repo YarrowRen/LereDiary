@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        android:color="@color/cardview_dark_background">
+    <item android:id="@android:id/mask"
+          android:drawable="@android:color/white" />
+
+    <item>
+        <shape android:shape="rectangle" >
+            <corners android:radius="4dp"/>
+            <solid android:color="#E1606060"/>
+            <stroke android:color="#E1606060" android:width="1px"/>
+        </shape>
+    </item>
+</ripple>

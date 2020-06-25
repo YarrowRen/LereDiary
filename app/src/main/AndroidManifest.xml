@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="cn.ywrby.lerediary">
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <application
+            android:name="org.litepal.LitePalApplication"
+            android:allowBackup="true"
+            android:hardwareAccelerated="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:resizeableActivity="false"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme"
+            tools:targetApi="n">
+        <activity android:name=".ViewDiaryActivity"
+                  android:theme="@style/ViewDiaryActivityTheme"
+        >
+        </activity>
+
+        <meta-data
+                android:name="com.baidu.speech.APP_ID"
+                android:value="20476412"/>
+        <meta-data
+                android:name="com.baidu.speech.API_KEY"
+                android:value="L1OldcGZAX7xvNPvFRtKNkF9"/>
+        <meta-data
+                android:name="com.baidu.speech.SECRET_KEY"
+                android:value="LNoGONxeqFAOtGUzf85QYFl0Sjww3WUb"/>
+
+        <activity
+                android:name=".EditDiaryActivity"
+                android:hardwareAccelerated="false"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".MainActivity"
+                android:hardwareAccelerated="false"
+                android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="cn.ywrby.lerediary.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths"/>
+        </provider>
+
+        <service
+                android:name="com.baidu.speech.VoiceRecognitionService"
+                android:exported="false"/>
+    </application>
+
+</manifest>
