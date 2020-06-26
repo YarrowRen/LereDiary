@@ -17,28 +17,23 @@
 ### 主页面（卡片模式）
 
 由于项目刚刚开始着手，主页面的诸多功能还没有具体实现，目前仅实现了基本的编辑/重编辑功能以及长按删除功能，预览功能
-<img src="https://pic.downk.cc/item/5ef5b23014195aa594b01c9a.png">
+<img src="https://www.helloimg.com/images/2020/06/26/Shell_2020-06-26-14-27-11-9196f326d9abfb4710e.png" alt="Shell_2020-06-26-14-27-11-9196f326d9abfb4710e.png" border="0" />
 
 ### 日记展示页面
-
-<img src="https://pic.downk.cc/item/5ef5b23014195aa594b01c9e.png">
+<img src="https://www.helloimg.com/images/2020/06/26/Shell_2020-06-26-14-27-13-20982ad6d0531f1df7d.png" alt="Shell_2020-06-26-14-27-13-20982ad6d0531f1df7d.png" border="0" />
 
 ### 日记编辑页面
 
 日记编辑页面的功能基本实现，不足之处在于使用的百度语音识别仅支持短句识别。其余功能日期，时间，天气的选择，富文本框，清空文本等功能基本实现。出于美观，界面统一的考量，没有设置插入图片功能，取而代之的是设置日记封面功能
-
-<img src="https://pic.downk.cc/item/5ef5b23014195aa594b01ca0.png">
-
-<img src="https://pic.downk.cc/item/5ef5b23014195aa594b01ca7.png">
+<img src="https://www.helloimg.com/images/2020/06/26/Shell_2020-06-26-14-27-14-80865436a317426ed80.png" alt="Shell_2020-06-26-14-27-14-80865436a317426ed80.png" border="0" />
+<img src="https://www.helloimg.com/images/2020/06/26/Shell_2020-06-26-14-27-15-3923c05a4cc017815d3.png" alt="Shell_2020-06-26-14-27-15-3923c05a4cc017815d3.png" border="0" />
 
 
 ### 主页面（简单模式）
-
-<img src="https://pic.downk.cc/item/5ef5b23014195aa594b01cab.png">
+<img src="https://www.helloimg.com/images/2020/06/26/Shell_2020-06-26-14-27-16-067b420ee368b570337.png" alt="Shell_2020-06-26-14-27-16-067b420ee368b570337.png" border="0" />
 
 ### 侧边栏（功能尚未实现）
-
-<img src="https://pic.downk.cc/item/5ef5b28c14195aa594b04c3c.png">
+<img src="https://www.helloimg.com/images/2020/06/26/Shell_2020-06-26-14-27-16-745fae75dd0ba63192c.png" alt="Shell_2020-06-26-14-27-16-745fae75dd0ba63192c.png" border="0" />
 
 ## 尾记
 
