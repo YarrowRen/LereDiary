@@ -1,9 +1,11 @@
 package cn.ywrby.lerediary.db;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 import org.litepal.crud.LitePalSupport;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,6 +24,7 @@ public class Diary extends LitePalSupport implements Parcelable {
     public Diary() {
         uuid=UUID.randomUUID().toString();
     }
+
 
 
 
@@ -119,4 +122,5 @@ public class Diary extends LitePalSupport implements Parcelable {
         dest.writeString(content);
         dest.writeString(cover);
     }
+
 }

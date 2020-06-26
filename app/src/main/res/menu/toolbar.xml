@@ -34,6 +34,15 @@
         android:id="@+id/write_diary_menu"
         android:title="写日记"
         app:showAsAction="never"/>
+
+    <item
+            android:id="@+id/simple_adapter_menu"
+            android:title="简单列表"
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/adapter_menu"
+            android:title="卡片布局"
+            app:showAsAction="never"/>
     <item
         android:id="@+id/setting_menu"
         android:title="设置"

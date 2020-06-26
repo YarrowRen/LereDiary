@@ -8,6 +8,7 @@ import android.os.Vibrator;
 import android.view.*;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -18,49 +19,35 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.widemouth.library.wmview.WMTextEditor;
-
 import java.util.List;
 
-import static com.widemouth.library.wmview.WMTextEditor.TYPE_NON_EDITABLE;
-
-public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
-
-
+public class SimpleDiaryAdapter extends RecyclerView.Adapter<SimpleDiaryAdapter.ViewHolder> {
     private Context mContext;
     private final List<Diary> mDiaryList;  //日记列表，被应用于RecyclerView中展示
     private int viewWidth=0;  //整体视图宽度，用于确定封面图片的大小
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView cardView;  //日记视图
+        LinearLayout cardView;  //日记视图
         TextView item_date;  //日期
         ImageView item_weather;  //天气
         ImageView item_cover;  //封面
         TextView item_title;  //标题
-        WMTextEditor item_content;  //内容
-        ImageView item_edit;  //编辑按钮
-        ImageView item_collect;  //收藏按钮
-        ImageView item_forward;  //转发按钮
         TextView item_time;  //时间
 
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            cardView = (CardView) view;
-            item_date = view.findViewById(R.id.item_date);
-            item_weather = view.findViewById(R.id.item_weather);
-            item_cover = view.findViewById(R.id.item_cover);
-            item_title = view.findViewById(R.id.item_title);
-            item_content = view.findViewById(R.id.item_content);
-            item_edit = view.findViewById(R.id.item_edit);
-            item_collect = view.findViewById(R.id.item_collect);
-            item_forward = view.findViewById(R.id.item_forward);
-            item_time = view.findViewById(R.id.item_time);
+            cardView = (LinearLayout) view;
+            item_date = view.findViewById(R.id.simple_item_date);
+            item_weather = view.findViewById(R.id.simple_item_weather);
+            item_cover = view.findViewById(R.id.simple_item_cover);
+            item_title = view.findViewById(R.id.simple_item_title);
+            item_time = view.findViewById(R.id.simple_item_time);
 
         }
     }
 
-    public DiaryAdapter(List<Diary> diaryList) {
+    public SimpleDiaryAdapter(List<Diary> diaryList) {
         mDiaryList = diaryList;
     }
 
@@ -72,7 +59,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
             mContext = parent.getContext();
         }
         //绑定事件
-        View view = LayoutInflater.from(mContext).inflate(R.layout.diary_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.simple_diary_item, parent, false);
 
         final ViewHolder viewHolder=new ViewHolder(view);
 
@@ -99,18 +86,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
                 return false;
             }
         });
-        //编辑当前日记
-        viewHolder.item_edit.setOnClickListener(new NoDoubleClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
-                int position=viewHolder.getAdapterPosition();
-                Diary diary=mDiaryList.get(position);
-                Intent intent=new Intent(mContext,EditDiaryActivity.class);
-                intent.putExtra("diary",diary);
-                mContext.startActivity(intent);
-                ((Activity)mContext).finish();
-            }
-        });
 
         return viewHolder;
     }
@@ -127,32 +102,14 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         //获取封面路径
         final String path=diary.getCover();
 
-        //只在第一次测量view的宽度，避免每次测量耗时导致滑动卡顿
-        if(viewWidth==0) {
-            holder.cardView.post(new Runnable() {
-                @Override
-                public void run() {
-                    viewWidth = holder.cardView.getWidth();
-                    Glide.with(holder.cardView)
-                            .load(path)
-                            .override(viewWidth, (int) (viewWidth * 0.5))//限制大小
-                            .apply(new RequestOptions().transform(new CenterCrop(), new RoundedCorners(20)))//设置圆角和裁切图片
-                            .into(holder.item_cover);
-                }
-            });
-        }else{
-            Glide.with(holder.cardView)
-                    .load(path)
-                    .override(viewWidth, (int) (viewWidth * 0.5))//限制大小
-                    .apply(new RequestOptions().transform(new CenterCrop(), new RoundedCorners(20)))//设置圆角和裁切图片
-                    .into(holder.item_cover);
-        }
+
+        Glide.with(holder.cardView)
+                .load(path)
+                .apply(new RequestOptions().transform(new CenterCrop(), new RoundedCorners(20)))//设置圆角和裁切图片
+                .into(holder.item_cover);
+
         //加载标题
         holder.item_title.setText(diary.getTitle());
-        //设置正文格式和内容（只读，最长5行）
-        holder.item_content.setMaxLines(5);
-        holder.item_content.fromHtml(diary.getContent());
-        holder.item_content.setEditorType(TYPE_NON_EDITABLE);
         //加载时间
         holder.item_time.setText(diary.getTime());
 

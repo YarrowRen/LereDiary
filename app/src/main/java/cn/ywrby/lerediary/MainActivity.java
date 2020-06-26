@@ -4,7 +4,8 @@ package cn.ywrby.lerediary;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.view.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -14,16 +15,24 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import cn.ywrby.lerediary.db.Diary;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.litepal.LitePal;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;  //刷新日记
     //从数据库读取日记信息
     private List<Diary> diaryList;
-    private DiaryAdapter adapter;
+    private RecyclerView.Adapter adapter;
+
+    private final int SIMPLE_TYPE=1;
+    private final int GENERAL_TYPE=2;
+    private int TYPE;
+
+
 
 
     @Override
@@ -100,9 +115,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         /* *******************************************************************************************
          *
-         * 刷新日记内容
+         * 读取规定的布局方式
          *
          ********************************************************************************************/
 
@@ -110,9 +126,34 @@ public class MainActivity extends AppCompatActivity {
         initDiary();  //在创建时初始化日记内容
         //绑定控制器和适配器
         GridLayoutManager layoutManager=new GridLayoutManager(this,1);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter=new DiaryAdapter(diaryList);
+        SharedPreferences pref=getSharedPreferences("TYPE",MODE_PRIVATE);
+        TYPE=pref.getInt("TYPE",GENERAL_TYPE);
+        switch (TYPE){
+            case GENERAL_TYPE:
+                /*
+                //生命为瀑布流的布局方式，2列，布局方向为垂直
+                StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                //解决item跳动
+                manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+                recyclerView.setLayoutManager(manager);
+                 */
+                adapter=new DiaryAdapter(diaryList);
+                break;
+            case SIMPLE_TYPE:
+                adapter=new SimpleDiaryAdapter(diaryList);
+                break;
+        }
+
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+        /* *******************************************************************************************
+         *
+         * 刷新日记内容
+         *
+         ********************************************************************************************/
+
+
         //下拉刷新
         swipeRefreshLayout=findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setColorSchemeColors(R.color.colorPrimary);
@@ -173,19 +214,65 @@ public class MainActivity extends AppCompatActivity {
     必须先清空列表，然后调用addAll添加值，保证对象不会改变
      */
     private void initDiary(){
+
+        SharedPreferences preferences=getSharedPreferences("DATA",MODE_PRIVATE);
+        //在初次使用应用时，向数据库导入四篇介绍性文章
+        if(preferences.getBoolean("FIRST",true)){
+            LitePal.getDatabase();  //创建数据库
+            Gson gson=new Gson();
+            String jsonData=getJson(MainActivity.this,"defaultDiary.json");
+            ArrayList<Diary> diaries=new ArrayList<Diary>();
+            Type listType = new TypeToken<List<Diary>>() {}.getType();
+            diaries=gson.fromJson(jsonData,listType);
+            for(Diary d:diaries){
+                d.setUuid(UUID.randomUUID().toString());
+                d.setCover(null);
+                d.save();
+            }
+            SharedPreferences.Editor editor=preferences.edit();
+            editor.putBoolean("FIRST",false);
+            editor.apply();
+        }
+
+
+
         if(diaryList!=null) {
             diaryList.clear();
             diaryList.addAll(LitePal.order("date desc,time desc").find(Diary.class));
         }else {
             diaryList=LitePal.order("date desc,time desc").find(Diary.class);
         }
+
+
     }
+
+    //读取json文件
+    public static String getJson(Context context, String fileName){
+        StringBuilder stringBuilder = new StringBuilder();
+        //获得assets资源管理器
+        AssetManager assetManager = context.getAssets();
+        //使用IO流读取json文件内容
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                    assetManager.open(fileName),"utf-8"));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
+    }
+
     //刷新日记展示内容
     private void refreshDiary(){
         initDiary();  //初始化日记列表
         adapter.notifyDataSetChanged();  //提示适配器检查数据，数据已改变
         swipeRefreshLayout.setRefreshing(false);  //关闭刷新状态
     }
+
 
 
 
@@ -210,6 +297,24 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(MainActivity.this,EditDiaryActivity.class);
                 startActivity(intent);
                 finish();  //这里结束当前活动，方便在保存日记回到该页面时重新调用onCreate方法进而刷新日记内容
+                break;
+            //简单布局
+            case R.id.simple_adapter_menu:
+                SharedPreferences.Editor editor2=getSharedPreferences("TYPE",MODE_PRIVATE).edit();
+                editor2.putInt("TYPE",SIMPLE_TYPE);
+                editor2.apply();
+                Intent intent2=new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent2);
+                finish();
+                break;
+            //卡片布局
+            case R.id.adapter_menu:
+                SharedPreferences.Editor editor=getSharedPreferences("TYPE",MODE_PRIVATE).edit();
+                editor.putInt("TYPE",GENERAL_TYPE);
+                editor.apply();
+                Intent intent1=new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent1);
+                finish();
                 break;
             //设置
             case R.id.setting_menu:
