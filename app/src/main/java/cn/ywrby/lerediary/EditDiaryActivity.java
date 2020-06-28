@@ -334,7 +334,10 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     }
 
-    //弹出日期选择器
+
+    /**
+     * 弹出日期选择器
+     */
     public void showCalendar(){
         //获取系统时间
         Calendar calendar = Calendar.getInstance();
@@ -353,7 +356,9 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     }
 
-    //弹出时间选择器
+    /**
+     * 弹出时间选择器
+     */
     public void showTime(){
         //获取系统时间
         Calendar calendar = Calendar.getInstance();
@@ -371,7 +376,9 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     }
 
-    //弹出天气选择框
+    /**
+     * 弹出天气选择框
+     */
     public void showMood(){
         View moodDialogView=View.inflate(EditDiaryActivity.this,R.layout.mood_list,null);
         //创建自定义选择框
@@ -394,6 +401,14 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     }
     //批量处理在天气弹出框内选择天气后的响应事件
+
+    /**
+     * 批量处理在天气弹出框内选择天气后的响应事件
+     * @param idList 各个ImageView控件的ID
+     * @param iconList 各个天气图像的ID
+     * @param dialog 天气选择框对象，在点击控件后消失
+     * @param win 选择框窗体（可通过dialog.getWindow获得，此处可略去）
+     */
     private void moodOnClick(final int[] idList, final int[] iconList, final AlertDialog dialog, Window win){
 
         for(int i=0;i<idList.length;i++) {
@@ -410,12 +425,10 @@ public class EditDiaryActivity extends AppCompatActivity {
         }
     }
 
-    //展示相册选择照片
-    /*
-    getBitmapMime()
-    insertPhotoToEditText()
-    displayImage()
-    方法参考自：https://github.com/yinyoupoet/FLAGS/tree/master
+
+
+    /**
+     * 展示相册选择照片
      */
     private void showAlbum(){
         Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT);
@@ -423,7 +436,11 @@ public class EditDiaryActivity extends AppCompatActivity {
         startActivityForResult(getAlbum,OPEN_ALBUM);
     }
 
-    //通过图片Uri解析图片真实路径，针对Android4.4以上版本解析数据
+
+    /**
+     * 通过图片虚拟化后的Uri解析图片真实Uri，针对Android4.4以上版本解析数据
+     * @param data
+     */
     @TargetApi(19)
     private void handleImageOnKitKat(Intent data){
         String imagePath=null;
@@ -455,7 +472,10 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     }
 
-    //通过图片Uri解析图片真实路径，针对Android4.4之前的版本
+    /**
+     * 通过图片虚拟化后的Uri解析图片真实Uri，针对Android4.4之前的版本
+     * @param data
+     */
     private void handleImageBeforeKitKat(Intent data){
         Uri uri=data.getData();
         String imagePath=getImagePath(uri,null);
@@ -468,7 +488,12 @@ public class EditDiaryActivity extends AppCompatActivity {
         }
     }
 
-    //复制单个文件到应用file文件夹中，避免因为用户删除手机图片导致日记文件损坏
+    /**
+     * 复制单个文件到应用file文件夹中，避免因为用户删除手机图片导致日记文件损坏
+     * @param oldPathName 旧文件路径
+     * @param newPathName 新文件路径
+     * @return 复制结果
+     */
     public boolean copyFile(String oldPathName, String newPathName) {
         try {
             File oldFile = new File(oldPathName);
@@ -489,7 +514,14 @@ public class EditDiaryActivity extends AppCompatActivity {
         }
     }
 
-    //获取图像路径
+    //
+
+    /**
+     * 通过Uri获取图像路径
+     * @param uri 图像Uri
+     * @param selection 过滤声明哪些行到返回，格式化为SQL WHERE子句（不包括WHERE本身）。 传递null将返回给定的URI的所有行。
+     * @return 图像路径
+     */
     private String getImagePath(Uri uri,String selection){
         String path=null;
         Cursor cursor=getContentResolver().query(uri,null,selection,null,null);
@@ -502,7 +534,9 @@ public class EditDiaryActivity extends AppCompatActivity {
         return path;
     }
 
-
+    /**
+     * 弹出封面选择框
+     */
     private void showCover(){
         View coverDialogView=View.inflate(EditDiaryActivity.this,R.layout.cover_item,null);
         //创建自定义选择框
@@ -547,7 +581,9 @@ public class EditDiaryActivity extends AppCompatActivity {
     }
 
 
-    //语音识别开始
+    /**
+     * 语音识别开始
+     */
     private void speechRecognitionStart(){
         Map<String,Object> params = new LinkedHashMap<>();//传递Map<String,Object>的参数，会将Map自动序列化为json
         String event = null;
@@ -557,11 +593,15 @@ public class EditDiaryActivity extends AppCompatActivity {
         json = new JSONObject(params).toString();//demo用json数据来做数据交换的方式
         asr.send(event, json, null, 0, 0);// 初始化EventManager对象,这个实例只能创建一次，就是我们上方创建的asr，此处开始传入
     }
-    //语音识别结束
+    /**
+     * 语音识别结束
+     */
     private void speechRecognitionStop(){
         asr.send(SpeechConstant.ASR_STOP, null, null, 0, 0);//此处停止
     }
-    //动态请求语音识别所需的相关权限
+    /**
+     * 动态请求语音识别所需的相关权限
+     */
     private void initPermissionOfSpeechRecognition() {
         String[] permissions = {Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.ACCESS_NETWORK_STATE,
@@ -587,7 +627,9 @@ public class EditDiaryActivity extends AppCompatActivity {
     }
 
 
-    //将所有文本控件载入控制栏并绑定富文本编辑器
+    /**
+     * 将所有文本控件载入控制栏并绑定富文本编辑器
+     */
     private void initContainerTool(){
         toolContainer.addToolItem(toolTextColor);
         toolContainer.addToolItem(toolBackgroundColor);
@@ -605,7 +647,9 @@ public class EditDiaryActivity extends AppCompatActivity {
         edit_content.setupWithToolContainer(toolContainer);
     }
 
-    //弹出正文清空提示框
+    /**
+     * 弹出正文清空提示框
+     */
     private void showClear(){
         View clearDialogView=View.inflate(EditDiaryActivity.this,R.layout.clear_edit_text,null);
         //创建自定义选择框
@@ -639,7 +683,9 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     }
 
-    //弹出保存内容提示框
+    /**
+     * 弹出保存内容提示框
+     */
     private void showSave(){
         View saveDialogView=View.inflate(EditDiaryActivity.this,R.layout.save_edit_text,null);
         //创建自定义选择框
@@ -683,7 +729,10 @@ public class EditDiaryActivity extends AppCompatActivity {
         });
     }
 
-    //保存日记内容
+    /**
+     * 保存日记内容
+     * @return 保存结果
+     */
     private boolean saveDiary(){
         Diary diary;
         if(!hasDefaultDiary) {
@@ -716,7 +765,7 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     //专门为了限制语音识别开始/结束点击按钮的速度，防止短时间快速点击按钮造成报错
     //其他的按钮限制采用NoDoubleClickListener类，并且不会弹出提示性语句
-    public abstract class NoDoubleClickListenerToSpeech implements View.OnClickListener {
+    public abstract static class NoDoubleClickListenerToSpeech implements View.OnClickListener {
 
         public static final int MIN_CLICK_DELAY_TIME = 1000;//这里设置不能超过多长时间
         private long lastClickTime = 0;
@@ -739,7 +788,10 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     }
 
-    //设置系统状态栏的颜色
+    /**
+     * 设置系统状态栏的颜色
+     * @see MainActivity#setStatusBarColor(Activity, int)
+     */
     static void setStatusBarColor(Activity activity, int statusColor) {
         Window window = activity.getWindow();
         //取消状态栏透明
@@ -759,8 +811,9 @@ public class EditDiaryActivity extends AppCompatActivity {
         }
     }
 
-
-    //弹出确认返回提示框
+    /**
+     * 弹出确认返回提示框
+     */
     private void showBack(){
         View backDialogView=View.inflate(EditDiaryActivity.this,R.layout.back_item,null);
         //创建自定义选择框
@@ -817,7 +870,11 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     }
 
-    //获取天气信息
+    /**
+     * 获取天气信息
+     * @param weather 天气ID
+     * @return 天气图像ID
+     */
     private int initWeather(int weather){
         switch (weather) {
             case 1:

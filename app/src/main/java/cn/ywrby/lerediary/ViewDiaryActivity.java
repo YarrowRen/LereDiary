@@ -1,6 +1,7 @@
 package cn.ywrby.lerediary;
 
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -75,9 +76,17 @@ public class ViewDiaryActivity extends AppCompatActivity {
             //使用默认的图片作为封面
             Glide.with(this).load(R.drawable.default_cover).into(view_cover);
         }
+
+
     }
 
-    //获取天气信息
+    //
+
+    /**
+     * 获取天气信息
+     * @param weather 当前日记的索引值
+     * @return 天气图片的ID
+     */
     private int initWeather(int weather){
         switch (weather) {
             case 1:

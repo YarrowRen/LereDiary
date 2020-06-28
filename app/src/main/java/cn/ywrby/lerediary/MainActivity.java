@@ -1,17 +1,27 @@
 package cn.ywrby.lerediary;
 
 
-import android.app.Activity;
+import android.app.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.view.*;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -31,11 +41,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
+
 public class MainActivity extends AppCompatActivity {
 
+    private Context mContext;
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private RecyclerView recyclerView;
@@ -55,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext=MainActivity.this;
 
         //设置导航栏滑出后占屏幕大小，这里设置滑出后占屏65%
         navigationView=findViewById(R.id.nav_view);
@@ -109,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         fabWrite.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
-                Intent intent=new Intent(MainActivity.this,EditDiaryActivity.class);
+                Intent intent=new Intent(mContext,EditDiaryActivity.class);
                 startActivity(intent);
                 finish();  //这里结束当前活动，方便在保存日记回到该页面时重新调用onCreate方法进而刷新日记内容
             }
@@ -182,7 +197,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //设置系统状态栏的颜色
+
+    /**
+     * 设置系统状态栏的颜色
+     * @param activity 当前活动，通过当前活动获得窗体
+     * @param statusColor 要设置的状态栏颜色
+     */
     static void setStatusBarColor(Activity activity, int statusColor) {
         Window window = activity.getWindow();
         //取消状态栏透明
@@ -202,25 +222,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //初始化日记展示内容
-    /*
-    当直接将从数据库或者其他方式获取的数据源集合或者数组直接赋值给当前数据源时，
-    相当于当前数据源的对象发生了变化，当前对象已经不是adapter中的对象了，
-    所以adaper调用notifyDataSetChanged()方法不会进行刷新数据和界面的操作
 
-    简言之，直接从数据库获取到的资源集合是一个全新的对象，将这个新对象赋给列表，虽然改变了列表的值，但实际是创建了一个新列表
-    所以在调用notifyDataSetChanged时，检查的还是原来的列表中的值，原来列表中的值没有改变，自然不会有更新效果
-    所以这里在初始化日记列表时，要首先进行判断，如果是初次赋值，直接赋值即可。如果已经有值
-    必须先清空列表，然后调用addAll添加值，保证对象不会改变
+    /**
+     * 初始化日记展示内容
      */
     private void initDiary(){
 
-        SharedPreferences preferences=getSharedPreferences("DATA",MODE_PRIVATE);
         //在初次使用应用时，向数据库导入四篇介绍性文章
+        SharedPreferences preferences=getSharedPreferences("DATA",MODE_PRIVATE);
         if(preferences.getBoolean("FIRST",true)){
             LitePal.getDatabase();  //创建数据库
             Gson gson=new Gson();
-            String jsonData=getJson(MainActivity.this,"defaultDiary.json");
+            String jsonData=getJson(mContext,"defaultDiary.json");
             ArrayList<Diary> diaries=new ArrayList<Diary>();
             Type listType = new TypeToken<List<Diary>>() {}.getType();
             diaries=gson.fromJson(jsonData,listType);
@@ -234,8 +247,16 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
         }
 
+        /*
+        当直接将从数据库或者其他方式获取的数据源集合或者数组直接赋值给当前数据源时，
+        相当于当前数据源的对象发生了变化，当前对象已经不是adapter中的对象了，
+        所以adaper调用notifyDataSetChanged()方法不会进行刷新数据和界面的操作
 
-
+        简言之，直接从数据库获取到的资源集合是一个全新的对象，将这个新对象赋给列表，虽然改变了列表的值，但实际是创建了一个新列表
+        所以在调用notifyDataSetChanged时，检查的还是原来的列表中的值，原来列表中的值没有改变，自然不会有更新效果
+        所以这里在初始化日记列表时，要首先进行判断，如果是初次赋值，直接赋值即可。如果已经有值
+        必须先清空列表，然后调用addAll添加值，保证对象不会改变
+         */
         if(diaryList!=null) {
             diaryList.clear();
             diaryList.addAll(LitePal.order("date desc,time desc").find(Diary.class));
@@ -246,7 +267,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //读取json文件
+
+    /**
+     * 读取json文件（位于assets文件夹中的json文件）
+     * @param context 当前Context
+     * @param fileName 文件名称
+     * @return 读取json文件得到的字符串对象（用于解析json）
+     */
     public static String getJson(Context context, String fileName){
         StringBuilder stringBuilder = new StringBuilder();
         //获得assets资源管理器
@@ -266,7 +293,10 @@ public class MainActivity extends AppCompatActivity {
         return stringBuilder.toString();
     }
 
-    //刷新日记展示内容
+
+    /**
+     * 刷新日记展示内容
+     */
     private void refreshDiary(){
         initDiary();  //初始化日记列表
         adapter.notifyDataSetChanged();  //提示适配器检查数据，数据已改变
@@ -274,9 +304,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 展示提醒设置界面，用于设置提醒或删除提醒
+     */
+    private void showClock(){
+        View clockDialogView=View.inflate(mContext,R.layout.clock_item,null);
+        //创建自定义选择框
+        final AlertDialog.Builder clockDialogBuilder = new AlertDialog.Builder(mContext);
+        clockDialogBuilder
+                .setView(clockDialogView)
+                .create();
+        final AlertDialog clockDialog=clockDialogBuilder.show();
+        Window clockWin=clockDialog.getWindow();
+        clockWin.setBackgroundDrawable(new BitmapDrawable());  //去除圆弧弹出框多余的空白四角
+        WindowManager.LayoutParams params = clockWin.getAttributes();
+        params.width = 1000;   //设置弹出框的宽度
+        clockWin.setAttributes(params);
+        Button clock_true=clockWin.findViewById(R.id.clock_true);
+        Button clock_delete=clockWin.findViewById(R.id.clock_delete);
 
 
-    //对菜单的响应事件
+        //设置定时广播
+        final AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent i=new Intent(this,ClockService.class);
+        final PendingIntent pi=PendingIntent.getService(this,0,i,0);
+        final int aDay=60*60*24*1000;  //一天的毫秒数
+        final long triigerAtTime=System.currentTimeMillis()+aDay;  //设置定时器开启时间为一天后
+
+        clock_true.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            protected void onNoDoubleClick(View v) {
+                clockDialog.dismiss();
+                Toast.makeText(mContext,"日记提醒设置成功！",Toast.LENGTH_SHORT).show();
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,triigerAtTime,aDay,pi);  //设定重复计时器，显示响应的通知
+            }
+        });
+        clock_delete.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            protected void onNoDoubleClick(View v) {
+                clockDialog.dismiss();
+                Toast.makeText(mContext,"已取消日记提醒！",Toast.LENGTH_SHORT).show();
+                alarmManager.cancel(pi);  //取消计时器
+            }
+        });
+    }
+
+    /**
+     * 对菜单的响应事件
+     * @param item 菜单选项
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -286,15 +363,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             //搜索功能
             case R.id.search:
-
                 break;
             //时钟功能
             case R.id.clock:
-
+                showClock();
                 break;
             //写日记功能
             case R.id.write_diary_menu:
-                Intent intent=new Intent(MainActivity.this,EditDiaryActivity.class);
+                Intent intent=new Intent(mContext,EditDiaryActivity.class);
                 startActivity(intent);
                 finish();  //这里结束当前活动，方便在保存日记回到该页面时重新调用onCreate方法进而刷新日记内容
                 break;
@@ -303,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor2=getSharedPreferences("TYPE",MODE_PRIVATE).edit();
                 editor2.putInt("TYPE",SIMPLE_TYPE);
                 editor2.apply();
-                Intent intent2=new Intent(MainActivity.this,MainActivity.class);
+                Intent intent2=new Intent(mContext,MainActivity.class);
                 startActivity(intent2);
                 finish();
                 break;
@@ -312,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor=getSharedPreferences("TYPE",MODE_PRIVATE).edit();
                 editor.putInt("TYPE",GENERAL_TYPE);
                 editor.apply();
-                Intent intent1=new Intent(MainActivity.this,MainActivity.class);
+                Intent intent1=new Intent(mContext,MainActivity.class);
                 startActivity(intent1);
                 finish();
                 break;

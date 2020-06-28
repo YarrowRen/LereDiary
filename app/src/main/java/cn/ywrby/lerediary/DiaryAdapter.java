@@ -159,8 +159,11 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
     }
 
 
-
-    //获取天气信息
+    /**
+     * 获取天气信息
+     * @param position 当前日记的索引值
+     * @return 天气图片的ID
+     */
     private int initWeather(int position){
         Diary diary = mDiaryList.get(position);
         int weather = diary.getWeather();
@@ -187,7 +190,12 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         return 0;
     }
 
-    //弹出删除提示框
+    /**
+     * 弹出删除提示框
+     * @param view 所在视图
+     * @param diary 要删除的日记对象（从数据库中清除对象时使用）
+     * @param position 日记对象在展示列表中的索引值（从列表中移除对象时使用）
+     */
     private void showDelete(final View view, final Diary diary, final int position){
         //震动提示
         Vibrator vibrator = (Vibrator)view.getContext().getSystemService(view.getContext().VIBRATOR_SERVICE);

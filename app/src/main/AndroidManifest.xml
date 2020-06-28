@@ -27,9 +27,15 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:targetApi="n">
-        <activity android:name=".ViewDiaryActivity"
-                  android:theme="@style/ViewDiaryActivityTheme"
-        >
+        <service
+                android:name=".ClockService"
+                android:enabled="true"
+                android:exported="true" android:permission="TODO" tools:ignore="ExportedService">
+        </service>
+
+        <activity
+                android:name=".ViewDiaryActivity"
+                android:theme="@style/ViewDiaryActivityTheme">
         </activity>
 
         <meta-data
