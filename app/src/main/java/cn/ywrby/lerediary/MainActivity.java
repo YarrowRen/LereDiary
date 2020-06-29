@@ -398,7 +398,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             //意见功能
             case R.id.opinion_menu:
-
+                Intent intent3=new Intent(mContext,FeedbackActivity.class);
+                startActivity(intent3);
                 break;
 
             default:

@@ -3,15 +3,25 @@ package cn.ywrby.lerediary;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.os.Vibrator;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import cn.ywrby.lerediary.db.Diary;
 import com.bumptech.glide.Glide;
@@ -20,7 +30,14 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.widemouth.library.wmview.WMTextEditor;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static com.widemouth.library.wmview.WMTextEditor.TYPE_NON_EDITABLE;
 
@@ -109,6 +126,13 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
                 intent.putExtra("diary",diary);
                 mContext.startActivity(intent);
                 ((Activity)mContext).finish();
+            }
+        });
+        //转发该条日记
+        viewHolder.item_forward.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            protected void onNoDoubleClick(View v) {
+                shareDiaryPic(viewHolder);
             }
         });
 
@@ -235,10 +259,59 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
 
     }
 
+
+    /**
+     * 通过Android原生的分享功能，结合截图功能，进行当前日记卡片的分享
+     * @param viewHolder 用来获取卡片对象
+     */
+    private void shareDiaryPic(ViewHolder viewHolder){
+        int position=viewHolder.getAdapterPosition();
+        View view=viewHolder.cardView;
+
+        //生成view的截图
+        view.setDrawingCacheEnabled(true);
+        view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        view.setDrawingCacheBackgroundColor(Color.WHITE);
+        Bitmap cacheBitmap=Bitmap.createBitmap(view.getWidth(),view.getHeight(),Bitmap.Config.ARGB_8888);
+        Canvas canvas=new Canvas(cacheBitmap);
+        canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        String fileName=mContext.getExternalCacheDir().toString()+"/lere_forward_"+System.currentTimeMillis()+".jpg";
+        File filePic = new File(fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(filePic);
+            cacheBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+            Log.d("YWRBY1", "onGlobalLayout: "+"成功执行");
+        }catch (IOException e){
+            Log.d("YWRBY1", "onGlobalLayout: "+e.getMessage());
+            e.printStackTrace();
+        }
+
+        //分享事件
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        //针对不同版本，采用不同方式获取文件Uri
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri contentUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()+".fileprovider", filePic);
+            sendIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }else {
+            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(filePic));
+        }
+        // 指定发送内容的类型 (MIME type)
+        sendIntent.setType("image/jpeg");
+        mContext.startActivity(Intent.createChooser(sendIntent,"Share to..."));
+    }
+
+
     @Override
     public int getItemCount() {
         return mDiaryList.size();
     }
+
+
 
 
 }

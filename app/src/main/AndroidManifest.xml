@@ -27,10 +27,15 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:targetApi="n">
+        <activity android:name=".FeedbackActivity">
+        </activity>
+
         <service
                 android:name=".ClockService"
                 android:enabled="true"
-                android:exported="true" android:permission="TODO" tools:ignore="ExportedService">
+                android:exported="true"
+                android:permission="TODO"
+                tools:ignore="ExportedService">
         </service>
 
         <activity

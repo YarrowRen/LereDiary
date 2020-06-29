@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DevInfor>
+<SinaWeibo AppKey="568898243" AppSecret="38a4f8204cc784f81f9f0daaf31e02e3" RedirectUrl="http://www.sharesdk.cn" />
+<TencentWeibo Enable="false" />
+<Douban Enable="false" />
+<QZone AppId="100371282" AppKey="aed9b0303e3ed1e27bae87c33761161d" />
+<Renren Enable="false" />
+<KaiXin Enable="false" />
+<Facebook ConsumerKey="1412473428822331" ConsumerSecret="a42f4f3f867dc947b9ed6020c2e93558" RedirectUrl="https://mob.com" />
+<Twitter ConsumerKey="LRBM0H75rWrU9gNHvlEAA2aOy" ConsumerSecret="gbeWsZvA9ELJSdoBzJ5oLKX0TU09UOwrzdGfo9Tg7DjyGuMe8G" CallbackUrl="http://mob.com" />
+<Evernote Enable="false" />
+<FourSquare Enable="false" />
+<GooglePlus Enable="false" />
+<Instagram Enable="false" />
+<LinkedIn ApiKey="ejo5ibkye3vo" SecretKey="cC7B2jpxITqPLZ5M" RedirectUrl="http://www.sharesdk.cn" />
+<Tumblr Enable="false" />
+<Email Enable="false" />
+<ShortMessage Enable="false" />
+<Wechat AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" userName="gh_afb25ac019c9" path="pages/index/index.html?id=1" WithShareTicket="true" MiniprogramType="2" />
+<WechatMoments AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" />
+<QQ AppId="100371282" AppKey="aed9b0303e3ed1e27bae87c33761161d" />
+<Instapaper Enable="false" />
+<Pocket Enable="false" />
+<YouDao HostType="product" ConsumerKey="dcde25dca105bcc36884ed4534dab940" ConsumerSecret="d98217b4020e7f1874263795f44838fe" RedirectUri="http://www.sharesdk.cn" />
+<Pinterest Enable="false" />
+<Flickr Enable="false" />
+<Dropbox Enable="false" />
+<VKontakte Enable="false" />
+<WechatFavorite AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" />
+<Yixin Enable="false" />
+<YixinMoments Enable="false" />
+<Mingdao Enable="false" />
+<Line Enable="false" />
+<WhatsApp Enable="false" />
+<KakaoTalk Enable="false" />
+<KakaoStory Enable="false" />
+<FacebookMessenger Enable="false" />
+<Alipay Enable="false" />
+<AlipayMoments Enable="false" />
+<Dingding Enable="false" />
+<Youtube Enable="false" />
+<Meipai Enable="false" />
+<Telegram Enable="false" />
+<Cmcc Enable="false" />
+<Reddit Enable="false" />
+<Telecom Enable="false" />
+<Accountkit Enable="false" />
+<Douyin AppKey="aw9ivykfjvi4hpwo" AppSecret="42b4caa6bda60bd49f05f06d0a4956e1" />
+<Wework Enable="false" />
+<HWAccount Enable="false" />
+<Oasis Enable="false" />
+<XMAccount Enable="false" />
+<SnapChat Enable="false" />
+<Kuaishou Enable="false" />
+<Littleredbook Enable="false" />
+<Watermelonvideo Enable="false" />
+</DevInfor>
