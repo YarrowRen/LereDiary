@@ -85,15 +85,7 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"/>
-            <ImageView
-                    android:id="@+id/item_collect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/item_collect1"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"/>
+
             <ImageView
                     android:id="@+id/item_forward"
                     android:layout_width="wrap_content"

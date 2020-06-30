@@ -70,7 +70,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
             item_title = view.findViewById(R.id.item_title);
             item_content = view.findViewById(R.id.item_content);
             item_edit = view.findViewById(R.id.item_edit);
-            item_collect = view.findViewById(R.id.item_collect);
             item_forward = view.findViewById(R.id.item_forward);
             item_time = view.findViewById(R.id.item_time);
 

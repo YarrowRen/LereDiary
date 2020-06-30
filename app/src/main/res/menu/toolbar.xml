@@ -20,11 +20,7 @@
 <menu
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/search"
-        android:icon="@drawable/search"
-        android:title="Search"
-        app:showAsAction="always"/>
+
     <item
         android:id="@+id/clock"
         android:icon="@drawable/clock"
@@ -33,7 +29,9 @@
     <item
         android:id="@+id/write_diary_menu"
         android:title="写日记"
-        app:showAsAction="never"/>
+        app:showAsAction="always"
+        android:icon="@drawable/write"
+    />
 
     <item
             android:id="@+id/simple_adapter_menu"
