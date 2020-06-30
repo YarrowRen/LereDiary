@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/edit_coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SettingActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/setting_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/setting_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+    <LinearLayout
+            android:layout_below="@id/setting_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+                android:id="@+id/setting_simple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="使用简单布局"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:textStyle="bold"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#432B2B2C"/>
+        <TextView
+                android:id="@+id/setting_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="使用卡片布局"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:textStyle="bold"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#432B2B2C"/>
+
+        <TextView
+                android:id="@+id/setting_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="设置每日提醒"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:textStyle="bold"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="#432B2B2C"/>
+        <TextView
+                android:id="@+id/setting_output"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="日记导出"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:textStyle="bold"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#432B2B2C"/>
+        <TextView
+                android:id="@+id/setting_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="日记导入"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:textStyle="bold"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="#432B2B2C"/>
+        <TextView
+                android:id="@+id/setting_open_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="开源库使用说明"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:textStyle="bold"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#432B2B2C"/>
+        <TextView
+                android:id="@+id/setting_opinion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="意见反馈"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:textStyle="bold"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#432B2B2C"/>
+        <TextView
+                android:id="@+id/setting_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="关于LereDiary"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:textStyle="bold"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#432B2B2C"/>
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

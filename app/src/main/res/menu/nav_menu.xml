@@ -19,25 +19,44 @@
             android:icon="@drawable/message"
             android:title="我的资料"/>
         <item
-            android:id="@+id/nav_tag"
-            android:icon="@drawable/tag"
-            android:title="常用标签"/>
+            android:id="@+id/nav_simple"
+            android:icon="@drawable/menu_simple"
+            android:title="简单布局"/>
         <item
-            android:id="@+id/nav_location"
-            android:icon="@drawable/location"
-            android:title="记忆地点"/>
+            android:id="@+id/nav_card"
+            android:icon="@drawable/menu_card"
+            android:title="卡片布局"/>
         <item
-            android:id="@+id/nav_collect"
-            android:icon="@drawable/collect"
-            android:title="日记收藏"/>
+            android:id="@+id/nav_notice"
+            android:icon="@drawable/menu_notice"
+            android:title="每日提醒"/>
         <item
-            android:id="@+id/nav_theme"
-            android:icon="@drawable/theme"
-            android:title="更换主题"/>
+            android:id="@+id/nav_output"
+            android:icon="@drawable/menu_output"
+            android:title="日记导出"/>
         <item
-            android:id="@+id/nav_setting"
-            android:icon="@drawable/setting"
-            android:title="设置"/>
+            android:id="@+id/nav_input"
+            android:icon="@drawable/menu_input"
+            android:title="日记导入"/>
+
+
+        <item
+                android:id="@+id/nav_open_source"
+                android:icon="@drawable/menu_open_source"
+                android:title="开源库使用说明"/>
+
+        <item
+                android:id="@+id/nav_opinion"
+                android:icon="@drawable/menu_opinion"
+                android:title="意见反馈"/>
+
+        <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/menu_about"
+                android:title="关于"/>
+
+
+
 
 
     </group>

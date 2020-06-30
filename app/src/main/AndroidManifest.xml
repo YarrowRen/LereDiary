@@ -27,7 +27,15 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:targetApi="n">
-        <activity android:name=".FeedbackActivity">
+        <activity android:name=".AboutActivity">
+        </activity>
+        <activity android:name=".OpenSourceLibraryActivity">
+        </activity>
+        <activity android:name=".SettingActivity">
+        </activity>
+        <activity
+                android:name=".FeedbackActivity"
+                android:theme="@style/ViewDiaryActivityTheme">
         </activity>
 
         <service

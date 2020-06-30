@@ -114,6 +114,67 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.list);    //设置导航按钮图标
         }
 
+
+        /* *******************************************************************************************
+         *
+         * 控制侧边栏
+         *
+         ********************************************************************************************/
+
+        NavigationView navView=findViewById(R.id.nav_view);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_simple:
+                        SharedPreferences.Editor editor2=getSharedPreferences("TYPE",MODE_PRIVATE).edit();
+                        editor2.putInt("TYPE",SIMPLE_TYPE);
+                        editor2.apply();
+                        Intent intent2=new Intent(mContext,MainActivity.class);
+                        startActivity(intent2);
+                        mDrawerLayout.closeDrawers();
+                        finish();
+                        break;
+                    case R.id.nav_card:
+                        SharedPreferences.Editor editor=getSharedPreferences("TYPE",MODE_PRIVATE).edit();
+                        editor.putInt("TYPE",GENERAL_TYPE);
+                        editor.apply();
+                        Intent intent1=new Intent(mContext,MainActivity.class);
+                        startActivity(intent1);
+                        mDrawerLayout.closeDrawers();
+                        finish();
+                        break;
+                    case R.id.nav_notice:
+                        showClock();
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_output:
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_input:
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_open_source:
+                        Intent intent=new Intent(mContext,OpenSourceLibraryActivity.class);
+                        startActivity(intent);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_opinion:
+                        Intent intent3=new Intent(mContext,FeedbackActivity.class);
+                        startActivity(intent3);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_about:
+                        Intent intent4=new Intent(mContext,AboutActivity.class);
+                        startActivity(intent4);
+                        mDrawerLayout.closeDrawers();
+                        break;
+                }
+                return true;
+            }
+        });
+
+
         /* *******************************************************************************************
          *
          * 操作按钮 设置点击事件
@@ -394,7 +455,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             //设置
             case R.id.setting_menu:
-
+                Intent intent4=new Intent(mContext,SettingActivity.class);
+                startActivity(intent4);
+                finish();
                 break;
             //意见功能
             case R.id.opinion_menu:
