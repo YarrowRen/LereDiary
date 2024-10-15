@@ -1,10 +1,7 @@
 # LereDiary
-一款开源的Android日记软件-An open source Android diary software
+开源的Android日记软件-An open source Android diary software
 
-## 简介
-这是一款简单的安卓日记软件，目前它已经实现了一个日记软件应该具有的大部分基础功能，包括基本的富文本编辑，封面图片的选择，展示界面等等。当然，由于是刚刚着手制作的缘故，许多功能还有待实现，并且有诸多可以优化的内容。
-
-blog：ywrby.com
+blog：yarrow.ren
 
 ## 软件预览
 
@@ -41,6 +38,3 @@ blog：ywrby.com
 2020/6/30|Sixth commit|侧边栏部分功能实现，设置页面实现
 2020/7/1|Seventh commit|增加日记导出和导入操作，完善侧边栏功能。
 
-## 尾记
-
-作者本人是CS专业大一在读学生，Lere日记的初衷完全是作为个人练习所用，所以难免有不足之处，如果您有其他宝贵的建议，期待您的留言
